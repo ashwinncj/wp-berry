@@ -21,3 +21,10 @@ node_modules/
 *.log
 *.sql
 *.sqlite
+
+# Composer related files.
+vendor
+composer.lock
+
+#Unit testing related install scripts
+bin
