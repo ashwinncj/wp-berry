@@ -9,7 +9,7 @@
  * Author:            Ashwin Kumar C
  * Author URI:        https://github.com/ashwinncj/
  * License:           MIT
- * Text Domain:       wp-berry
+ * Text Domain:       wpberry
  */
 
-
+require_once plugin_dir_path( __FILE__ ) . 'inc/settings.php';
