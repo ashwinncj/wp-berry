@@ -133,17 +133,6 @@ class Settings {
 				'slug'       => 'project',
 				'with_front' => true,
 			),
-			'capabilities'        => array(
-				'read' => 'berry_user',
-				'publish_posts'       => 'berry_user',
-				'edit_others_posts'   => 'berry_user',
-				'delete_posts'        => 'berry_user',
-				'delete_others_posts' => 'berry_user',
-				'read_private_posts'  => 'berry_user',
-				'edit_post'           => 'edit_posts',
-				'delete_post'         => 'berry_user',
-				'read_post'           => 'berry_user',
-			),
 			'show_admin_column'     => false,
 			'show_in_rest'          => true,
 			'rest_base'             => 'project',
@@ -164,12 +153,13 @@ class Settings {
 		remove_role( 'berry_user' );
 
 		$capabilities = array(
-			'read' => true,
-			'edit_posts' => true
+			'can_create_ticket' => true,
+			'can_read_ticket'   => true,
+			'berry_user'        => true,
 		);
-
 		$capabilities = array_merge( get_role( 'editor' )->capabilities, $capabilities );
-		$response = add_role( 'berry_user', 'Berry User', $capabilities );
+		$response     = add_role( 'berry_user', 'Berry User', $capabilities );
+
 	}
 
 	public function add_capabilities_to_existing() {
