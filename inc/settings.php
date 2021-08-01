@@ -1,18 +1,19 @@
 <?php
 
-namespace WPBerries;
+namespace WPBerry;
 
 class Settings {
 
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_cpt' ) );
+		add_action( 'init', array( $this, 'register_tax' ) );
 	}
 
 	/**
 	 * Registers the CPT for Berry tickets.
 	 */
 	public function register_cpt() {
-		
+
 		/**
 		 * Post Type: Berry Tickets.
 		 */
@@ -82,7 +83,61 @@ class Settings {
 
 		register_post_type( 'berry', $args );
 	}
+
+	public function register_tax() {
+
+		/**
+		 * Taxonomy: Projects.
+		 */
+
+		$labels = array(
+			'name'                       => __( 'Projects', 'wpberry' ),
+			'singular_name'              => __( 'Project', 'wpberry' ),
+			'menu_name'                  => __( 'Projects', 'wpberry' ),
+			'all_items'                  => __( 'All Projects', 'wpberry' ),
+			'edit_item'                  => __( 'Edit Project', 'wpberry' ),
+			'view_item'                  => __( 'View Project', 'wpberry' ),
+			'update_item'                => __( 'Update Project name', 'wpberry' ),
+			'add_new_item'               => __( 'Add new Project', 'wpberry' ),
+			'new_item_name'              => __( 'New Project name', 'wpberry' ),
+			'parent_item'                => __( 'Parent Project', 'wpberry' ),
+			'parent_item_colon'          => __( 'Parent Project:', 'wpberry' ),
+			'search_items'               => __( 'Search Projects', 'wpberry' ),
+			'popular_items'              => __( 'Popular Projects', 'wpberry' ),
+			'separate_items_with_commas' => __( 'Separate Projects with commas', 'wpberry' ),
+			'add_or_remove_items'        => __( 'Add or remove Projects', 'wpberry' ),
+			'choose_from_most_used'      => __( 'Choose from the most used Projects', 'wpberry' ),
+			'not_found'                  => __( 'No Projects found', 'wpberry' ),
+			'no_terms'                   => __( 'No Projects', 'wpberry' ),
+			'items_list_navigation'      => __( 'Projects list navigation', 'wpberry' ),
+			'items_list'                 => __( 'Projects list', 'wpberry' ),
+			'back_to_items'              => __( 'Back to Projects', 'wpberry' ),
+		);
+
+		$args = array(
+			'label'                 => __( 'Projects', 'wpberry' ),
+			'labels'                => $labels,
+			'public'                => true,
+			'publicly_queryable'    => true,
+			'hierarchical'          => false,
+			'show_ui'               => true,
+			'show_in_menu'          => true,
+			'show_in_nav_menus'     => true,
+			'query_var'             => true,
+			'rewrite'               => array(
+				'slug'       => 'project',
+				'with_front' => true,
+			),
+			'show_admin_column'     => false,
+			'show_in_rest'          => true,
+			'rest_base'             => 'project',
+			'rest_controller_class' => 'WP_REST_Terms_Controller',
+			'show_in_quick_edit'    => false,
+			'show_in_graphql'       => false,
+		);
+		register_taxonomy( 'project', array( 'berry' ), $args );
+	}
 }
 
-$settings_instance = new Settings();
+new Settings();
 
