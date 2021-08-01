@@ -154,7 +154,7 @@ class Settings {
 		$capabilities = array(
 			'can_create_ticket' => true,
 			'can_read_ticket'   => true,
-			'berry_user' => true
+			'berry_user'        => true,
 		);
 		add_role( 'berry_user', 'Berry User', $capabilities );
 	}
