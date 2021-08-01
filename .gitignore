@@ -26,5 +26,3 @@ node_modules/
 vendor
 composer.lock
 
-#Unit testing related install scripts
-bin

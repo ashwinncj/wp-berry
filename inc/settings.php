@@ -7,6 +7,7 @@ class Settings {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_cpt' ) );
 		add_action( 'init', array( $this, 'register_tax' ) );
+		add_action( 'init', array( $this, 'add_capabilities_to_existing' ), 11 );
 	}
 
 	/**
@@ -124,7 +125,7 @@ class Settings {
 			'labels'                => $labels,
 			'public'                => true,
 			'publicly_queryable'    => true,
-			'hierarchical'          => false,
+			'hierarchical'          => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
 			'show_in_nav_menus'     => true,
@@ -153,8 +154,20 @@ class Settings {
 		$capabilities = array(
 			'can_create_ticket' => true,
 			'can_read_ticket'   => true,
+			'berry_user' => true
 		);
 		add_role( 'berry_user', 'Berry User', $capabilities );
+	}
+
+	public function add_capabilities_to_existing() {
+
+		// Set role as `berry_admin` for administrator.
+		$role = get_role( 'administrator' );
+		$role->add_cap( 'berry_admin', true );
+
+		// Editor to be set as `berry_user`
+		$role = get_role( 'editor' );
+		$role->add_cap( 'berry_user', true );
 	}
 }
 
