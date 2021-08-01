@@ -141,7 +141,7 @@ class Settings {
 			'show_in_quick_edit'    => false,
 			'show_in_graphql'       => false,
 		);
-		register_taxonomy( 'project', array( 'berry' ), $args );
+		register_taxonomy( 'berry_project', array( 'berry' ), $args );
 	}
 
 	/**
