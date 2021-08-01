@@ -14,11 +14,15 @@ class RolesTest extends WP_UnitTestCase {
 	 */
 	public function testRolesAreAppledToAdminAndEditor() {
 
+		$editor = get_role( 'editor' );
 		$admin = get_role( 'administrator' );
 		$this->assertTrue( $admin->has_cap( 'berry_admin' ) );
-
-		$editor = get_role( 'editor' );
 		$this->assertTrue( $editor->has_cap( 'berry_user' ) );
 
 	}
+
+    public function testBerryUserRoleExists() {
+        $berry_role = get_role( 'berry_user' );
+        $this->assertNotEmpty( $berry_role );
+    }
 }
