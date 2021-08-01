@@ -161,13 +161,15 @@ class Settings {
 	 * @return void
 	 */
 	public function register_role() {
+		remove_role( 'berry_user' );
+
 		$capabilities = array(
-			'can_create_ticket' => true,
-			'can_read_ticket'   => true,
-			'berry_user'        => true,
+			'read' => true,
+			'edit_posts' => true
 		);
+
 		$capabilities = array_merge( get_role( 'editor' )->capabilities, $capabilities );
-		add_role( 'berry_user', 'Berry User', $capabilities );
+		$response = add_role( 'berry_user', 'Berry User', $capabilities );
 	}
 
 	public function add_capabilities_to_existing() {
@@ -176,7 +178,7 @@ class Settings {
 		$role = get_role( 'administrator' );
 		$role->add_cap( 'berry_admin', true );
 		$role->add_cap( 'berry_user', true );
-		
+
 		// Editor to be set as `berry_user`
 		$role = get_role( 'editor' );
 		$role->add_cap( 'berry_user', true );
