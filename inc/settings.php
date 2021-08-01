@@ -157,7 +157,7 @@ class Settings {
 			'can_read_ticket'   => true,
 			'berry_user'        => true,
 		);
-		$capabilities = array_merge( get_role( 'editor' )->capabilities, $capabilities );
+		$capabilities = array_merge( get_role( 'author' )->capabilities, $capabilities );
 		$response     = add_role( 'berry_user', 'Berry User', $capabilities );
 
 	}
