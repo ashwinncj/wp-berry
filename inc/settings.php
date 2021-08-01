@@ -7,7 +7,6 @@ class Settings {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_cpt' ) );
 		add_action( 'init', array( $this, 'register_tax' ) );
-		add_action( 'init', array( $this, 'add_capabilities_to_existing' ), 11 );
 	}
 
 	/**
@@ -134,6 +133,17 @@ class Settings {
 				'slug'       => 'project',
 				'with_front' => true,
 			),
+			'capabilities'        => array(
+				'read' => 'berry_user',
+				'publish_posts'       => 'berry_user',
+				'edit_others_posts'   => 'berry_user',
+				'delete_posts'        => 'berry_user',
+				'delete_others_posts' => 'berry_user',
+				'read_private_posts'  => 'berry_user',
+				'edit_post'           => 'edit_posts',
+				'delete_post'         => 'berry_user',
+				'read_post'           => 'berry_user',
+			),
 			'show_admin_column'     => false,
 			'show_in_rest'          => true,
 			'rest_base'             => 'project',
@@ -156,6 +166,7 @@ class Settings {
 			'can_read_ticket'   => true,
 			'berry_user'        => true,
 		);
+		$capabilities = array_merge( get_role( 'editor' )->capabilities, $capabilities );
 		add_role( 'berry_user', 'Berry User', $capabilities );
 	}
 
@@ -164,7 +175,8 @@ class Settings {
 		// Set role as `berry_admin` for administrator.
 		$role = get_role( 'administrator' );
 		$role->add_cap( 'berry_admin', true );
-
+		$role->add_cap( 'berry_user', true );
+		
 		// Editor to be set as `berry_user`
 		$role = get_role( 'editor' );
 		$role->add_cap( 'berry_user', true );
