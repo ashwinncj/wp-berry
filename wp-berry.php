@@ -12,4 +12,8 @@
  * Text Domain:       wpberry
  */
 
+use WPBerry\Settings;
+
 require_once plugin_dir_path( __FILE__ ) . 'inc/settings.php';
+
+register_activation_hook( __FILE__, array( new Settings(), 'register_role' ) );
