@@ -84,6 +84,11 @@ class Settings {
 		register_post_type( 'berry', $args );
 	}
 
+	/**
+	 * Register Taxonomy for WPBerry.
+	 *
+	 * @return void
+	 */
 	public function register_tax() {
 
 		/**
@@ -136,6 +141,20 @@ class Settings {
 			'show_in_graphql'       => false,
 		);
 		register_taxonomy( 'project', array( 'berry' ), $args );
+	}
+
+	/**
+	 * Registers new User Role for supporting Berry User.
+	 * Runs only on activation.
+	 *
+	 * @return void
+	 */
+	public function register_role() {
+		$capabilities = array(
+			'can_create_ticket' => true,
+			'can_read_ticket'   => true,
+		);
+		add_role( 'berry_user', 'Berry User', $capabilities );
 	}
 }
 
