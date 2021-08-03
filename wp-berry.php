@@ -13,8 +13,20 @@
  */
 
 use WPBerry\Settings;
+define( 'BERRY_PROJECT_TAXONOMY', 'berry_project' );
+define( 'BERRY_CPT', 'berry' );
 
 require_once plugin_dir_path( __FILE__ ) . 'inc/settings.php';
+require_once plugin_dir_path( __FILE__ ) . 'inc/tickets.php';
 
-register_activation_hook( __FILE__, array( new Settings(), 'register_role' ) );
-register_activation_hook( __FILE__, array( new Settings(), 'add_capabilities_to_existing' ) );
+/**
+ * plugin activation actions that has to be executed only once during the activation.
+ *
+ * @return void
+ */
+function berry_activation() {
+	$settings = new Settings();
+	$settings->register_role();
+	$settings->add_capabilities_to_existing();
+}
+register_activation_hook( __FILE__, 'berry_activation' );

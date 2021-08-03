@@ -81,7 +81,7 @@ class Settings {
 			'show_in_graphql'       => false,
 		);
 
-		register_post_type( 'berry', $args );
+		register_post_type( BERRY_CPT, $args );
 	}
 
 	/**
@@ -140,7 +140,11 @@ class Settings {
 			'show_in_quick_edit'    => false,
 			'show_in_graphql'       => false,
 		);
-		register_taxonomy( 'berry_project', array( 'berry' ), $args );
+		register_taxonomy( BERRY_PROJECT_TAXONOMY, array( 'berry' ), $args );
+
+		// Inserting a default term .
+		wp_insert_term( 'Triage', BERRY_PROJECT_TAXONOMY );
+
 	}
 
 	/**
@@ -162,6 +166,11 @@ class Settings {
 
 	}
 
+	/**
+	 * Add the capabilities of the berry user to the administrator and editor.
+	 *
+	 * @return void
+	 */
 	public function add_capabilities_to_existing() {
 
 		// Set role as `berry_admin` for administrator.
@@ -169,10 +178,11 @@ class Settings {
 		$role->add_cap( 'berry_admin', true );
 		$role->add_cap( 'berry_user', true );
 
-		// Editor to be set as `berry_user`
+		// Editor to be set as `berry_user`.
 		$role = get_role( 'editor' );
 		$role->add_cap( 'berry_user', true );
 	}
+
 }
 
 new Settings();
